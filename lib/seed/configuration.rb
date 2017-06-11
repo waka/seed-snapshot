@@ -1,6 +1,9 @@
-module SeedSnapshot
+module Seed
   class Configuration
     def initialize
+      # error if rails did not loaded
+      raise 'seed-snapshot required rails.' unless defined?(Rails)
+      # error if adapter is not mysql
       raise 'Support only MySQL' if adapter_name == 'Mysql2'
     end
 
@@ -16,18 +19,18 @@ module SeedSnapshot
       @options ||= ActiveRecord::Base.connection.raw_connection.query_options
     end
 
-    # /tmp/dump/123456789.sql'
-    def current_version_path
-      base_path.join(schema_version + '.sql')
-    end
-
-    # /tmp/dump
+    # ${Rails.root}/tmp/dump
     def base_path
       Rails.root.join('tmp').join('dump')
     end
 
+    # ${Rails.root}/tmp/dump/123456789.sql'
+    def current_version_path
+      base_path.join(schema_version + '.sql')
+    end
+
     def make_tmp_dir
-      FileUtils.mkdir_p(base_path) if File.exists?(base_path)
+      FileUtils.mkdir_p(base_path) unless File.exists?(base_path)
     end
   end
 end

@@ -1,4 +1,4 @@
-module SeedSnapshot
+module Seed
   class Snapshot
     def initialize(configuration)
       @configuration = configuration
