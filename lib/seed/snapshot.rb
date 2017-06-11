@@ -59,7 +59,7 @@ module Seed
 
     def ignore_tables(classes)
       db = @configuration.database_options[:database]
-      tables(classes).push("#{database}.schema_migrations")
+      tables(classes).push("#{db}.schema_migrations")
     end
   end
 end
