@@ -1,7 +1,8 @@
 module Seed
   class Configuration
     def initialize
-      chopstick
+      # error if adapter is not mysql
+      raise 'seed-snapshot support only MySQL' unless adapter_name == 'Mysql2'
     end
 
     def adapter_name
@@ -18,7 +19,7 @@ module Seed
 
     # ${Rails.root}/tmp/dump
     def base_path
-      Rails.root.join('tmp').join('dump')
+      Pathname.new(Dir.pwd).join('tmp').join('dump')
     end
 
     # ${Rails.root}/tmp/dump/123456789.sql'
@@ -28,13 +29,6 @@ module Seed
 
     def make_tmp_dir
       FileUtils.mkdir_p(base_path) unless File.exists?(base_path)
-    end
-
-    def chopstick
-      # error if rails did not loaded
-      raise 'seed-snapshot required rails.' unless defined?(Rails)
-      # error if adapter is not mysql
-      raise 'seed-snapshot support only MySQL' unless adapter_name == 'Mysql2'
     end
   end
 end

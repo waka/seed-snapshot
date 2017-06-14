@@ -9,10 +9,10 @@ module SeedSnapshot
 
   # @param Array[ActiveRecord::Base] classes
   # @param Array[ActiveRecord::Base] ignore_classes
-  # @param Boolean force_dump
-  def self.dump(classes: [], ignore_classes: [], force_dump: false)
+  # @param Boolean force
+  def self.dump(classes: [], ignore_classes: [], force: false)
     snapshot = Seed::Snapshot.new(self.configuration)
-    snapshot.dump(classes, ignore_classes, force_dump)
+    snapshot.dump(classes, ignore_classes, force)
   end
 
   def self.restore
@@ -20,11 +20,13 @@ module SeedSnapshot
     snapshot.restore
   end
 
+  # @return Boolean
   def self.exists?
     snapshot = Seed::Snapshot.new(self.configuration)
     snapshot.exist_path?
   end
 
+  # @return Seed::Configuration
   def self.configuration
     Seed::Configuration.new
   end
