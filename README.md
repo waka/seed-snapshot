@@ -1,11 +1,6 @@
-# ActiveRecord::Snapshot
+# Seed::Snapshot
 
-DBダンプ/リストアを管理するためのライブラリ.
-RSpecの高速化のために以下の用途で使うのを想定しています.
-
-- schema
-- master data
-- huge record by complexly builder
+This library manage of dump/restore data by database.
 
 ## Installation
 
@@ -13,7 +8,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 group :test do
-  gem 'active_record-snapshot'
+  gem 'seed-snapshot'
 end
 ```
 
@@ -23,14 +18,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install active_record-snapshot
+    $ gem install seed-snapshot
 
 ## Usage
 
-Auto configuration ActiveRecord::Snapshot itself.
+Auto configuration Seed::Snapshot itself.
 
 ```
-ActiveRecord::Snapshot.configure do |config|
+Seed::Snapshot.configure do |config|
   config.tables = [User, Item]
 
   config.restore_hook = :before_suite
@@ -47,8 +42,8 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
 
-    if ActiveRecord::Snapshot.check_version?
-      ActiveRecord::Snapshot.restore(tables)
+    if Seed::Snapshot.exists?
+      Seed::Snapshot.restore(tables)
     else
       # load seed data normally
     end
@@ -63,8 +58,8 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    if ActiveRecord::Snapshot.check_version?
-      ActiveRecord::Snapshot.dump(tables)
+    if Seed::Snapshot.exists?
+      Seed::Snapshot.dump(tables)
     end
   end
 end
@@ -78,7 +73,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/waka/active_record-snapshot.
+Bug reports and pull requests are welcome on GitHub at https://github.com/waka/seed-snapshot.
 
 
 ## License
