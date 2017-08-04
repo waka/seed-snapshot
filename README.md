@@ -1,5 +1,7 @@
 # Seed::Snapshot
 
+[![Build Status](https://travis-ci.org/waka/seed-snapshot.png?branch=master)](https://travis-ci.org/waka/seed-snapshot)
+
 This library manage of dump/restore data by database.
 
 ## Installation
