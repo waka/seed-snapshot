@@ -32,8 +32,8 @@ class RestoreTest < SeedSnapshot::TestCase
     assert_equal Rent.count, 0
 
     SeedSnapshot.restore
-    assert_equal User.count, 0
-    assert_equal Book.count, 0
-    assert_equal Rent.count, 0
+    assert_equal User.count, 2
+    assert_equal Book.count, 1
+    assert_equal Rent.count, 1
   end
 end

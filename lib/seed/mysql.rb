@@ -1,11 +1,13 @@
 module Seed
   class Mysql
     def self.dump(file_path, username:, password:, host:, port:, database:, tables:, ignore_tables:)
+      host = 'localhost' unless host
       cmd = "MYSQL_PWD=#{password} mysqldump -u #{username} -h #{host} #{database} -t #{allow_tables_option(tables)} #{ignore_tables_option(ignore_tables)} > #{file_path}"
       system cmd
     end
 
     def self.restore(file_path, username:, password:, host:, port:, database:)
+      host = 'localhost' unless host
       cmd = "MYSQL_PWD=#{password} mysql -u #{username} -h #{host} #{database} < #{file_path}"
       system cmd
     end
