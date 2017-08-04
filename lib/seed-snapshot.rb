@@ -5,8 +5,6 @@ require 'seed/mysql'
 require 'seed/snapshot'
 
 module SeedSnapshot
-  VERSION = "0.1.0"
-
   # @param Array[ActiveRecord::Base] classes
   # @param Array[ActiveRecord::Base] ignore_classes
   # @param Boolean force
@@ -24,6 +22,11 @@ module SeedSnapshot
   def self.exists?
     snapshot = Seed::Snapshot.new(self.configuration)
     snapshot.exist_path?
+  end
+
+  def self.clean
+    snapshot = Seed::Snapshot.new(self.configuration)
+    snapshot.clean
   end
 
   # @return Seed::Configuration

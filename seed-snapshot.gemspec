@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'seed-snapshot'
+require 'seed/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'seed-snapshot'
@@ -17,8 +17,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
 
-  spec.add_development_dependency 'bundler', '~> 1.14'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'rake'
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'erubis'
+  spec.add_development_dependency 'mysql2', '>= 0.3', '< 0.4'
   spec.add_runtime_dependency 'activerecord', '>= 4.2'
 end

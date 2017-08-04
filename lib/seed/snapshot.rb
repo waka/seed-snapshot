@@ -35,6 +35,16 @@ module Seed
       )
     end
 
+    def clean
+      unless exist_path?
+        puts "Dump file does not exist for current schema."
+        return
+      end
+
+      version_path = @configuration.current_version_path
+      File.delete(version_path)
+    end
+
     def exist_path?
       version_path = @configuration.current_version_path
       File.exists?(version_path)

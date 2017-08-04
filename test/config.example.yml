@@ -1,20 +1,13 @@
 default_connection: 'mysql2'
 
-connextions:
-  mysql:
-    arunit:
-      username: rails
-      encoding: utf8
-      collation: utf8_unicode_ci
-    arunit2:
-      username: rails
-      encoding: utf8
-
+connections:
   mysql2:
     arunit:
-      username: rails
+      username: mysql
+      password: root
       encoding: utf8
       collation: utf8_unicode_ci
     arunit2:
-      username: rails
+      username: mysql
+      password: root
       encoding: utf8
