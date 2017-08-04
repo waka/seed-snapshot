@@ -1,3 +1,5 @@
+require 'active_record'
+
 module Seed
   class Configuration
     def initialize

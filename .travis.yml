@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - 2.3.4
+  - 2.4.1
+  - ruby-head
+sudo: false
+cache: bundler
+branches:
+  only:
+    - master
+before_install:
+  - mysql -e "create database activerecord_unittest;"
