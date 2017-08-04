@@ -3,9 +3,9 @@ default_connection: 'mysql2'
 connections:
   mysql2:
     arunit:
-      username: rails
+      username: root
       encoding: utf8
       collation: utf8_unicode_ci
     arunit2:
-      username: rails
+      username: root
       encoding: utf8
