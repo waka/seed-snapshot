@@ -30,7 +30,7 @@ module Seed
     end
 
     def make_tmp_dir
-      FileUtils.mkdir_p(base_path) unless File.exists?(base_path)
+      FileUtils.mkdir_p(base_path) unless File.exist?(base_path)
     end
   end
 end

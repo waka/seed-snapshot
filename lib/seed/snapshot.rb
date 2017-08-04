@@ -47,7 +47,7 @@ module Seed
 
     def exist_path?
       version_path = @configuration.current_version_path
-      File.exists?(version_path)
+      File.exist?(version_path)
     end
 
     def options
