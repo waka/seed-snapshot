@@ -3,6 +3,11 @@ rvm:
   - 2.3.4
   - 2.4.1
   - ruby-head
+env:
+  - "AR_VERSION=4.2.8"
+  - "AR_VERSION=4.2.9"
+  - "AR_VERSION=5.0.4"
+  - "AR_VERSION=5.1.3"
 sudo: false
 cache: bundler
 branches:
