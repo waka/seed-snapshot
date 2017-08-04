@@ -1,4 +1,4 @@
-# Seed::Snapshot
+# SeedSnapshot
 
 [![Build Status](https://travis-ci.org/waka/seed-snapshot.png?branch=master)](https://travis-ci.org/waka/seed-snapshot)
 
@@ -24,28 +24,19 @@ Or install it yourself as:
 
 ## Usage
 
-Auto configuration Seed::Snapshot itself.
+Configuration in RSpec with DatabaseCleaner (optional).
 
 ```
-Seed::Snapshot.configure do |config|
-  config.tables = [User, Item]
+require 'seed-snapshot'
 
-  config.restore_hook = :before_suite
-  config.dump_hook    = :after_suite
-end
-```
-
-Manual configuration in RSpec with DatabaseCleaner (optional).
-
-```
 RSpec.configure do |config|
   tables = [User, Item]
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
 
-    if Seed::Snapshot.exists?
-      Seed::Snapshot.restore(tables)
+    if SeedSnapshot.exists?
+      SeedSnapshot.restore(tables)
     else
       # load seed data normally
     end
@@ -60,8 +51,8 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    if Seed::Snapshot.exists?
-      Seed::Snapshot.dump(tables)
+    if SeedSnapshot.exists?
+      SeedSnapshot.dump(tables)
     end
   end
 end

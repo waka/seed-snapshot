@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'seed-snapshot'
+require 'seed_snapshot/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'seed-snapshot'
