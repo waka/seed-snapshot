@@ -51,7 +51,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    if SeedSnapshot.exists?
+    unless SeedSnapshot.exists?
       SeedSnapshot.dump(tables)
     end
   end
