@@ -9,10 +9,6 @@ class RestoreTest < SeedSnapshot::TestCase
     destroy_models
   end
 
-  def teardown
-    super
-  end
-
   def create_models
     user = User.create!
     book = Book.create!(user_id: user.id)
