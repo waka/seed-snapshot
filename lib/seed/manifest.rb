@@ -17,6 +17,8 @@ module Seed
     end
 
     def save
+      @configuration.make_tmp_dir
+
       open(self.manifest_path, File::WRONLY | File::CREAT) do |io|
         JSON.dump(self.current, io)
       end
@@ -29,6 +31,8 @@ module Seed
 
     # @return [Hash]
     def latest
+      @configuration.make_tmp_dir
+
       open(self.manifest_path, File::RDONLY | File::CREAT) do |io|
         JSON.load(io) rescue {}
       end
