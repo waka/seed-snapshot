@@ -1,4 +1,5 @@
 require 'seed/configuration'
+require 'seed/manifest'
 require 'seed/mysql'
 require 'seed/snapshot'
 
@@ -25,6 +26,11 @@ module SeedSnapshot
   def self.clean
     snapshot = Seed::Snapshot.new(self.configuration)
     snapshot.clean
+  end
+
+  # @return Seed::Manifest
+  def self.manifest
+    Seed::Manifest.new(self.configuration)
   end
 
   # @return Seed::Configuration
