@@ -12,7 +12,7 @@ module Seed
     end
 
     def schema_version
-      @schema_version ||= ActiveRecord::Migrator.get_all_versions.size
+      @schema_version ||= ActiveRecord::Migrator.get_all_versions.hash
     end
 
     def database_options
