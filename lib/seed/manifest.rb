@@ -19,7 +19,7 @@ module Seed
     def save
       @configuration.make_tmp_dir
 
-      open(self.manifest_path, File::WRONLY | File::CREAT) do |io|
+      open(self.manifest_path, File::WRONLY | File::CREAT | File::TRUNC) do |io|
         JSON.dump(self.current, io)
       end
     end
