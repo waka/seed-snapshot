@@ -13,7 +13,7 @@ module Seed
     end
 
     def schema_version
-      @schema_version ||= ActiveRecord::Migrator.get_all_versions.sort.hash
+      @schema_version ||= Digest::SHA1.hexdigest(ActiveRecord::Migrator.get_all_versions.sort.join)
     end
 
     def database_options
