@@ -13,7 +13,7 @@ module Seed
     end
 
     def schema_version
-      @schema_version ||= Digest::SHA1.hexdigest(ActiveRecord::Migrator.get_all_versions.sort.join)
+      @schema_version ||= Digest::SHA1.hexdigest(get_all_versions.sort.join)
     end
 
     def database_options
@@ -32,6 +32,17 @@ module Seed
 
     def make_tmp_dir
       FileUtils.mkdir_p(base_path) unless File.exist?(base_path)
+    end
+
+    private
+
+    def get_all_versions
+      if ::Gem::Version.new(::ActiveRecord::VERSION::STRING) >= ::Gem::Version.new('5.2')
+        migration_paths = ::ActiveRecord::Migrator.migrations_paths
+        ::ActiveRecord::MigrationContext.new(migration_paths).get_all_versions
+      else
+        ::ActiveRecord::Migrator.get_all_versions
+      end
     end
   end
 end
