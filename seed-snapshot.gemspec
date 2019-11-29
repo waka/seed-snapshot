@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'minitest'
   spec.add_development_dependency 'erubis'
-  spec.add_development_dependency 'mysql2', '>= 0.3', '< 0.4'
+  spec.add_development_dependency 'mysql2', '>= 0.4.4', '< 0.6.0'
   spec.add_runtime_dependency 'activerecord', '>= 4.2'
 end

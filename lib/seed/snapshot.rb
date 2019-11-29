@@ -69,7 +69,9 @@ module Seed
 
     def ignore_tables(classes)
       db = @configuration.database_options[:database]
-      tables(classes).push("#{db}.schema_migrations")
+
+      # mysqldump `--ignore-table` options require database name.
+      tables(classes).push('schema_migrations').map {|t| "#{db}.#{t}" }
     end
   end
 end

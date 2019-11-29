@@ -5,7 +5,7 @@ class RestoreTest < SeedSnapshot::TestCase
     SeedSnapshot.clean
 
     create_models
-    SeedSnapshot.dump(classes: [User, Book, Rent])
+    SeedSnapshot.dump(classes: [User, Book], ignore_classes: [Rent])
     destroy_models
   end
 
@@ -30,6 +30,6 @@ class RestoreTest < SeedSnapshot::TestCase
     SeedSnapshot.restore
     assert_equal User.count, 2
     assert_equal Book.count, 1
-    assert_equal Rent.count, 1
+    assert_equal Rent.count, 0
   end
 end
