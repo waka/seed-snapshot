@@ -62,8 +62,9 @@ module Seed
     end
 
     def tables(classes)
+      db = @configuration.database_options[:database]
       classes.map do |cls|
-        cls.table_name
+        "#{db}.#{cls.table_name}"
       end
     end
 
