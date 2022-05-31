@@ -1,8 +1,16 @@
 module Seed
   class Mysql
-    def self.dump(file_path, username:, password:, host:, port:, database:, tables:, ignore_tables:)
+    def self.dump(file_path, username:, password:, host:, port:, database:, tables:, ignore_tables:, client_version:)
       host = 'localhost' unless host
-      cmd = "MYSQL_PWD=#{password} mysqldump -u #{username} -h #{host} #{database} -t #{allow_tables_option(tables)} #{ignore_tables_option(ignore_tables)} > #{file_path}"
+
+      additional_options =
+        if client_version.match?(/\A8/)
+          '--skip-column-statistics'
+        else
+          ''
+        end
+
+      cmd = "MYSQL_PWD=#{password} mysqldump -u #{username} -h #{host} #{database} -t #{allow_tables_option(tables)} #{ignore_tables_option(ignore_tables)} --no-tablespaces #{additional_options} > #{file_path}"
       system cmd
     end
 

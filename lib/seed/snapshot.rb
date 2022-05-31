@@ -16,7 +16,8 @@ module Seed
         @configuration.current_version_path,
         options.merge({
           tables: tables(classes),
-          ignore_tables: ignore_tables(ignore_classes)
+          ignore_tables: ignore_tables(ignore_classes),
+          client_version: @configuration.client_version
         })
       )
     end
