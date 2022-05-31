@@ -17,11 +17,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
 
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'minitest'
-  spec.add_development_dependency 'erubis'
-  spec.add_development_dependency 'mysql2', '>= 0.4.4', '< 0.6.0'
   spec.add_runtime_dependency 'activerecord', '>= 4.2'
 end

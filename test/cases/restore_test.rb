@@ -12,7 +12,7 @@ class RestoreTest < SeedSnapshot::TestCase
   def create_models
     user = User.create!
     book = Book.create!(user_id: user.id)
-    rent = Rent.create!(user_id: user.id, book_id: book.id)
+    Rent.create!(user_id: user.id, book_id: book.id)
     User.create!
   end
 
