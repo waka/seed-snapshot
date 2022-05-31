@@ -16,6 +16,10 @@ module Seed
       @schema_version ||= Digest::SHA1.hexdigest(get_all_versions.sort.join)
     end
 
+    def client_version
+      @client_version ||= ActiveRecord::Base.connection.raw_connection.info[:version]
+    end
+
     def database_options
       @options ||= ActiveRecord::Base.connection.raw_connection.query_options
     end
