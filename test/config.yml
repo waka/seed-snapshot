@@ -1,0 +1,17 @@
+default_connection: 'mysql2'
+
+connections:
+  mysql2:
+    arunit:
+      host: 127.0.0.1
+      port: 3306
+      username: <%= ENV['DB_USERNAME'] || 'root' %>
+      password: <%= ENV['DB_PASSWORD'] || '' %>
+      encoding: utf8
+      collation: utf8_unicode_ci
+    arunit2:
+      host: 127.0.0.1
+      port: 3306
+      username: <%= ENV['DB_USERNAME'] || 'root' %>
+      password: <%= ENV['DB_PASSWORD'] || '' %>
+      encoding: utf8

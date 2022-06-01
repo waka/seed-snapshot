@@ -16,10 +16,6 @@ module ARTest
     end
 
     def read_config
-      unless config_file.exist?
-        FileUtils.cp TEST_ROOT + '/config.example.yml', config_file
-      end
-
       erb = ERB.new(config_file.read)
       expand_config(YAML.parse(erb.result(binding)).transform)
     end
