@@ -14,7 +14,7 @@ module Seed
 
       Mysql.dump(
         @configuration.current_version_path,
-        options.merge({
+        **options.merge({
           tables: tables(classes),
           ignore_tables: ignore_tables(ignore_classes),
           client_version: @configuration.client_version
@@ -32,7 +32,7 @@ module Seed
 
       Mysql.restore(
         @configuration.current_version_path,
-        options
+        **options
       )
     end
 
