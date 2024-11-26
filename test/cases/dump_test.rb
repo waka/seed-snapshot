@@ -12,5 +12,12 @@ class DumpTest < SeedSnapshot::TestCase
   def test_dump
     SeedSnapshot.dump
     assert_equal SeedSnapshot.exists?, true
+
+    lines = open(SeedSnapshot.configuration.current_version_path) { |f| f.readlines }
+    assert lines.any? { |l| l.include?(User.table_name) }
+    assert lines.any? { |l| l.include?(Book.table_name) }
+    assert lines.any? { |l| l.include?(Rent.table_name) }
+    assert lines.none? { |l| l.include?('ar_internal_metadata') }
+    assert lines.none? { |l| l.include?('schema_migrations') }
   end
 end

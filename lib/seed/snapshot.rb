@@ -68,11 +68,16 @@ module Seed
       end
     end
 
+    IGNORED_TABLES = [
+      'ar_internal_metadata',
+      'schema_migrations'
+    ].freeze
+
     def ignore_tables(classes)
       db = @configuration.database_options[:database]
 
       # mysqldump `--ignore-table` options require database name.
-      tables(classes).push('schema_migrations').map {|t| "#{db}.#{t}" }
+      tables(classes).concat(IGNORED_TABLES).map {|t| "#{db}.#{t}" }
     end
   end
 end
