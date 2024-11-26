@@ -41,7 +41,7 @@ module Seed
     private
 
     def get_all_versions
-      if ::Gem::Version.new(::ActiveRecord::VERSION::STRING) >= ::Gem::Version.new('7.2')
+      if ::Gem::Version.new(::ActiveRecord::VERSION::STRING) >= ::Gem::Version.new('7.1')
         migration_paths = ::ActiveRecord::Migrator.migrations_paths
         ::ActiveRecord::MigrationContext.new(migration_paths).get_all_versions
       elsif ::Gem::Version.new(::ActiveRecord::VERSION::STRING) >= ::Gem::Version.new('6.0')
