@@ -17,5 +17,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
 
-  spec.add_runtime_dependency 'activerecord', '>= 4.2'
+  spec.add_runtime_dependency 'activerecord', '>= 7.0'
 end

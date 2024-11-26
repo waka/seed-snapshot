@@ -1,8 +1,6 @@
-# SeedSnapshot
+# seed-snapshot
 
-[![Build Status](https://travis-ci.org/waka/seed-snapshot.png?branch=master)](https://travis-ci.org/waka/seed-snapshot)
-
-This library manage of dump/restore data by database.
+The library that easily and quickly dumps and restores seed data.
 
 ## Installation
 
