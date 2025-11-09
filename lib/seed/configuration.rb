@@ -21,7 +21,7 @@ module Seed
     end
 
     def database_options
-      @options ||= ActiveRecord::Base.connection.raw_connection.query_options
+      @options ||= ActiveRecord::Base.connection_db_config.configuration_hash
     end
 
     # ${Rails.root}/tmp/dump
