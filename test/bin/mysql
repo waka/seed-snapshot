@@ -1,0 +1,8 @@
+#!/bin/sh
+# ホストに MySQL クライアントが無い場合に、compose.yaml の mysql コンテナ内のクライアントを使うためのシム。
+# mysqldump はこのファイルへのシンボリックリンクで、呼び出された名前のコマンドをコンテナ内で実行する。
+# ホスト側の -h / -P はコンテナ内からは使えないので、末尾で上書きする（mysql クライアントは後勝ち）。
+set -e
+root=$(cd "$(dirname "$0")/../.." && pwd)
+exec docker compose -f "$root/compose.yaml" exec -T -e MYSQL_PWD="${MYSQL_PWD-}" mysql \
+  "$(basename "$0")" "$@" -h 127.0.0.1 -P 3306
