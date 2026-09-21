@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents (Claude Code, Codex, etc.) when 
 
 ## 概要
 
-`seed-snapshot` は ActiveRecord (>= 7.0) 向けの gem で、テスト用のシードデータを `mysqldump` / `mysql` CLI で高速にダンプ・リストアする。**MySQL (Mysql2 アダプタ) 専用**で、`Seed::Configuration` の初期化時に他アダプタだと例外を投げる。
+`seed-snapshot` は ActiveRecord (>= 7.2) 向けの gem で、テスト用のシードデータを `mysqldump` / `mysql` CLI で高速にダンプ・リストアする。**MySQL (Mysql2 アダプタ) 専用**で、`Seed::Configuration` の初期化時に他アダプタだと例外を投げる。
 
 ## コマンド
 
@@ -13,7 +13,7 @@ bin/setup                     # bundle install
 bundle exec rake              # 全テスト実行（default タスク = test）
 bundle exec ruby -Ilib -Itest test/cases/dump_test.rb              # 単一ファイル
 bundle exec ruby -Ilib -Itest test/cases/dump_test.rb -n test_dump # 単一テスト
-BUNDLE_GEMFILE=gemfiles/ar_7.1.gemfile bundle exec rake            # 特定の ActiveRecord バージョンで実行
+BUNDLE_GEMFILE=gemfiles/ar_8.0.gemfile bundle exec rake            # 特定の ActiveRecord バージョンで実行
 bundle exec rake release      # リリース（バージョンは lib/seed_snapshot/version.rb）
 ```
 
@@ -37,12 +37,12 @@ docker compose down           # データは tmpfs なので停止すると消�
 
   `activerecord_unittest2` は DB を作るだけで、テーブルは作られず現状のテストでも使われていない。
 
-CI（`.github/workflows/main.yml`）は Ruby 3.1〜3.3 × ActiveRecord 7.0〜8.0 のマトリクスを `gemfiles/ar_*.gemfile` で回す（MySQL 8.0）。サポートする AR バージョンを増減する場合は gemfile と CI マトリクスの両方を更新する。
+CI（`.github/workflows/main.yml`）は Ruby 3.3〜4.0 × ActiveRecord 7.2〜8.1 のマトリクスを `gemfiles/ar_*.gemfile` で回す（MySQL 8.0）。サポートが終了した Ruby / Rails は基本的に外す方針（ただし Rails 7.2 は EOL 後も残している）。サポートする AR バージョンを増減する場合は gemfile・CI マトリクス・gemspec の `activerecord` 依存をまとめて更新する。
 
 ## アーキテクチャ
 
 - `lib/seed-snapshot.rb` — 公開 API（`SeedSnapshot.dump(classes:, ignore_classes:, force:)`, `.restore`, `.exists?`, `.clean`, `.manifest`）。呼び出しごとに `Seed::Configuration` を新規生成する。
-- `Seed::Configuration` — 接続情報・パスを解決する。ダンプファイルは `Dir.pwd/tmp/dump/<schema_version>.sql`。`schema_version` は**マイグレーションバージョン一覧の SHA1** なので、マイグレーションが変わるとスナップショットは自動的に無効化（別ファイル扱い）される。`get_all_versions` は AR バージョンごとに `MigrationContext` の API 差異を吸収している。
+- `Seed::Configuration` — 接続情報・パスを解決する。ダンプファイルは `Dir.pwd/tmp/dump/<schema_version>.sql`。`schema_version` は**マイグレーションバージョン一覧の SHA1** なので、マイグレーションが変わるとスナップショットは自動的に無効化（別ファイル扱い）される。`get_all_versions` は `MigrationContext#get_all_versions` を使う。
 - `Seed::Snapshot` — dump/restore/clean の本体。モデルクラスから `table_name` を取り出して `Seed::Mysql` に渡す。`ar_internal_metadata` と `schema_migrations` は常に除外（`--ignore-table` は `db.table` 形式が必要）。
 - `Seed::Mysql` — `system` でシェルコマンドを組み立てて実行。`mysqldump -t`（データのみ、スキーマなし）。クライアントバージョンが 8 系なら `--skip-column-statistics` を付ける。
 - `Seed::Manifest` — シードファイル群の SHA256 を `tmp/dump/seed_manifest.json` に保存し、`diff?` でシード入力の変更を検知するための補助。
