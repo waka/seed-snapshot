@@ -1,0 +1,43 @@
+name: Release
+
+# v0.8.0 のようなタグを push すると rubygems.org に gem を公開する
+# 認証は RubyGems の Trusted Publishing（OIDC）を使うので API キーは不要
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+          bundler-cache: true
+
+      # タグと lib/seed_snapshot/version.rb のバージョンが一致しなければ中断する
+      - name: Check version
+        run: |
+          version=$(ruby -Ilib -e 'require "seed_snapshot/version"; print SeedSnapshot::VERSION')
+          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match SeedSnapshot::VERSION (${version})"
+            exit 1
+          fi
+
+      - name: Release gem
+        uses: rubygems/release-gem@v1

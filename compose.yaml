@@ -1,0 +1,19 @@
+# 開発/テスト用 MySQL（CI の services と同じ構成）
+#   docker compose up -d --wait
+#   bundle exec rake
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: activerecord_unittest
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    # テスト用なのでデータは永続化せずメモリ上に置く
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20

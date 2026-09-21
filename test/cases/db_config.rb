@@ -5,12 +5,27 @@ require 'seed-snapshot'
 
 require 'support/config'
 require 'support/connection'
+require 'support/mysql_client'
+
+# MySQL が起動直後（docker compose up -d 直後など）で接続を受け付けられない場合に、しばらく待つ
+def wait_for_connection(timeout: 30)
+  deadline = Time.now + timeout
+  begin
+    ActiveRecord::Base.connection.verify!
+  rescue ActiveRecord::ConnectionNotEstablished
+    raise if Time.now > deadline
+    puts 'Waiting for MySQL to accept connections...'
+    sleep 1
+    retry
+  end
+end
 
 # create database if it doesn't exist
 def create_database_if_not_exists
   ARTest.connection_config.each do |_, config|
     begin
       ActiveRecord::Base.establish_connection(config.except('database'))
+      wait_for_connection
       ActiveRecord::Base.connection.create_database(config['database'], charset: config['encoding'], collation: config['collation'])
     rescue ActiveRecord::DatabaseAlreadyExists
       # Database already exists, nothing to do
