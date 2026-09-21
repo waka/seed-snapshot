@@ -14,8 +14,9 @@ bundle exec rake              # 全テスト実行（default タスク = test）
 bundle exec ruby -Ilib -Itest test/cases/dump_test.rb              # 単一ファイル
 bundle exec ruby -Ilib -Itest test/cases/dump_test.rb -n test_dump # 単一テスト
 BUNDLE_GEMFILE=gemfiles/ar_8.0.gemfile bundle exec rake            # 特定の ActiveRecord バージョンで実行
-bundle exec rake release      # リリース（バージョンは lib/seed_snapshot/version.rb）
 ```
+
+**リリース**: `lib/seed_snapshot/version.rb` のバージョンを上げて master にマージした後、`git tag v<バージョン> && git push origin v<バージョン>` でタグを push すると、`.github/workflows/release.yml` が rubygems.org に公開する（RubyGems の Trusted Publishing を使用）。タグとバージョンが一致しないと失敗する。
 
 ## テスト環境
 
