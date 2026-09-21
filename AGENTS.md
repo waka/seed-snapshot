@@ -49,6 +49,6 @@ CI（`.github/workflows/main.yml`）は Ruby 3.3〜4.0 × ActiveRecord 7.2〜8.1
 
 ## 注意点
 
-- 実際のバージョン定義は `lib/seed_snapshot/version.rb`（gemspec が参照）。`lib/seed/version.rb` は古い残骸で使われていない。
+- バージョン定義は `lib/seed_snapshot/version.rb`（gemspec が参照）。
 - README の Usage 例（`SeedSnapshot.restore(tables)` / `dump(tables)`）は現在のキーワード引数 API と一致していない。
 - テストは `Dir.pwd` 基準で `tmp/dump` を作るため、リポジトリルートから実行すること。
